@@ -1,3 +1,3 @@
-import 'dotenv/config';
+import "dotenv/config";
 
-console.log('Hello, World!');
+console.log("Hello, World!");

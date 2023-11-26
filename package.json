@@ -4,16 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "prettier --check .",
+    "fix": "prettier --write ."
   },
   "keywords": [],
   "author": "Zach Romani",
   "license": "ISC",
   "devDependencies": {
     "@types/imap": "^0.8.40",
+    "@types/jest": "^29.5.10",
     "@types/mailparser": "^3.4.4",
     "@types/node": "^20.10.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.1.0",
+    "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
