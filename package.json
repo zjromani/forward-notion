@@ -25,6 +25,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "@notionhq/client": "^2.2.13",
     "dotenv": "^16.3.1",
     "imap": "^0.8.17",
     "mailparser": "^3.6.5",
