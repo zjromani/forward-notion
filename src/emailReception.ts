@@ -11,9 +11,9 @@ interface ImapConfig {
 }
 
 const imapConfig: ImapConfig = {
-  user: 'your-email@example.com',
-  password: 'app-specific-password',
-  host: 'imap.example.com',
+	user: process.env.GMAIL_USER,
+  password: process.env.GMAIL_PASSWORD,
+  host: 'imap.gmail.com',
   port: 993,
   tls: true,
 };

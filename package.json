@@ -16,7 +16,9 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "imap": "^0.8.17",
-    "mailparser": "^3.6.5"
+    "mailparser": "^3.6.5",
+    "zod": "^3.22.4"
   }
 }
