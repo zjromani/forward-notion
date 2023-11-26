@@ -1,22 +1,32 @@
 import Connection from 'imap';
 import Imap from 'imap';
 import { ParsedMail, Source, simpleParser } from 'mailparser';
+import { z } from 'zod';
 
-interface ImapConfig {
-  user: string;
-  password: string;
-  host: string;
-  port: number;
-  tls: boolean;
-}
+const imapConfigSchema = z.object({
+  user: z.string(),
+  password: z.string(),
+  host: z.string(),
+  port: z.number(),
+  tls: z.boolean(),
+  tlsOptions: z.object({
+    rejectUnauthorized: z.boolean()
+  })
+});
 
-const imapConfig: ImapConfig = {
+type ImapConfig = z.infer<typeof imapConfigSchema>;
+
+
+const config = {
 	user: process.env.GMAIL_USER,
   password: process.env.GMAIL_PASSWORD,
   host: 'imap.gmail.com',
   port: 993,
   tls: true,
 };
+
+const imapConfig: ImapConfig = imapConfigSchema.parse(config);
+
 
 const imap = new Imap(imapConfig);
 
