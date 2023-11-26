@@ -2,6 +2,7 @@ import Imap from "imap";
 import { ParsedMail, Source, simpleParser } from "mailparser";
 import { z } from "zod";
 import { processEmailContent } from "./contentProcessing";
+import { config } from "./config/validatedConfig";
 
 const imapConfigSchema = z.object({
   user: z.string(),
@@ -16,18 +17,18 @@ const imapConfigSchema = z.object({
 
 type ImapConfig = z.infer<typeof imapConfigSchema>;
 
-const config = {
-  user: process.env.GMAIL_USER,
-  password: process.env.GMAIL_PASSWORD,
+const imapConfig = {
+  user: config.gmailUser,
+  password: config.gmailPassword,
   host: "imap.gmail.com",
   port: 993,
   tls: true,
   tlsOptions: { rejectUnauthorized: false }
 };
 
-const imapConfig: ImapConfig = imapConfigSchema.parse(config);
+const validatedImapConfig: ImapConfig = imapConfigSchema.parse(imapConfig);
 
-const imap = new Imap(imapConfig);
+const imap = new Imap(validatedImapConfig);
 
 function openInbox(cb: (err: Error, mailbox: Imap.Box) => void): void {
   imap.openBox("INBOX", false, cb);

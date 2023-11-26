@@ -1,3 +1,9 @@
-import "dotenv/config";
+import { fetchUnseenEmails } from "./emailReception";
 
-console.log("Hello, World!");
+fetchUnseenEmails()
+  .then(emails => {
+    console.log(emails);
+  })
+  .catch(err => {
+    console.error(err);
+  });
