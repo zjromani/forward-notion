@@ -1,9 +1,16 @@
+import { ParsedMail } from "mailparser";
 import { fetchUnseenEmails } from "./emailReception";
+import { sendToNotion } from "./notion/sendToNotion";
 
 fetchUnseenEmails()
   .then(emails => {
-    console.log(emails);
+    // return Promise.all(emails.map(email => sendToNotion(email)));
+    const email = emails[0];
+    return sendToNotion(email as ParsedMail);
   })
-  .catch(err => {
-    console.error(err);
+  .then(results => {
+    console.log("All emails have been sent to Notion:", results);
+  })
+  .catch(error => {
+    console.error("An error occurred:", error);
   });

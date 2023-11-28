@@ -4,7 +4,7 @@ import notion from "./notionClient";
 import { processEmailContent } from "../contentProcessing";
 import { ParsedMail } from "mailparser";
 
-async function addEmailToNotion(email: ParsedMail, databaseId: string) {
+export async function sendToNotion(email: ParsedMail) {
   const emailContent = processEmailContent(email);
 
   const response = await notion.pages.create({
@@ -15,7 +15,7 @@ async function addEmailToNotion(email: ParsedMail, databaseId: string) {
         title: [
           {
             text: {
-              content: emailContent.subject
+              content: emailContent.subject ?? "Default Subject"
             }
           }
         ]
@@ -27,7 +27,7 @@ async function addEmailToNotion(email: ParsedMail, databaseId: string) {
         object: "block",
         type: "paragraph",
         paragraph: {
-          text: [
+          rich_text: [
             {
               type: "text",
               text: {

@@ -42,7 +42,12 @@ export function fetchUnseenEmails(): Promise<ParsedMail[]> {
           reject(err);
           return;
         }
-        const searchCriteria = ["ALL"];
+        // const searchCriteria = ["ALL"];
+        const searchCriteria = [
+          "UNSEEN",
+          ["SINCE", new Date().toDateString().split(" ").slice(1).join("-")]
+        ];
+
         const fetchOptions: Imap.FetchOptions = {
           bodies: ["HEADER", "TEXT"],
           markSeen: false
@@ -55,6 +60,7 @@ export function fetchUnseenEmails(): Promise<ParsedMail[]> {
           }
           const fetchedEmails: any[] = [];
           const fetch = imap.fetch(results, fetchOptions);
+          console.log("Fetching emails...");
 
           fetch.on("message", (msg: Imap.ImapMessage, seqno: number) => {
             msg.on("body", (stream: Source) => {
@@ -63,6 +69,8 @@ export function fetchUnseenEmails(): Promise<ParsedMail[]> {
                   reject(parseErr);
                   return;
                 }
+
+                console.log("Fetched email:", mail.subject);
 
                 fetchedEmails.push(processEmailContent(mail));
               });
