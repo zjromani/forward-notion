@@ -10,7 +10,6 @@ export async function sendToNotion(email: ParsedMail) {
   const response = await notion.pages.create({
     parent: { database_id: config.notionDatabaseId },
     properties: {
-      // Map your email content to your Notion database properties
       Name: {
         title: [
           {
@@ -20,7 +19,6 @@ export async function sendToNotion(email: ParsedMail) {
           }
         ]
       }
-      // ... other properties ...
     },
     children: [
       {
@@ -37,7 +35,6 @@ export async function sendToNotion(email: ParsedMail) {
           ]
         }
       }
-      // ... handle attachments or other content as needed ...
     ]
   });
 

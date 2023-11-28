@@ -70,7 +70,7 @@ export function fetchUnseenEmails(): Promise<ParsedMail[]> {
                   return;
                 }
 
-                console.log("Fetched email:", mail.subject);
+                console.log("Fetched email subject:", mail.subject);
 
                 fetchedEmails.push(processEmailContent(mail));
               });
