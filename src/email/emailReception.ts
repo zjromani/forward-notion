@@ -2,7 +2,7 @@ import Imap from "imap";
 import { ParsedMail, Source, simpleParser } from "mailparser";
 import { z } from "zod";
 import { processEmailContent } from "./contentProcessing";
-import { config } from "./config/validatedConfig";
+import { config } from "../config/validatedConfig";
 
 const imapConfigSchema = z.object({
   user: z.string(),
