@@ -1,5 +1,4 @@
-import { mock } from "node:test";
-import { processEmailContent } from "./email/contentProcessing"; // Adjust path as needed
+import { processEmailContent } from "./contentProcessing"; // Adjust path as needed
 import { ParsedMail } from "mailparser";
 
 describe("processEmailContent", () => {
