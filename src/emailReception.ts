@@ -1,7 +1,6 @@
 import Imap from "imap";
 import { ParsedMail, Source, simpleParser } from "mailparser";
 import { z } from "zod";
-import { processEmailContent } from "./notion/transformData";
 import { config } from "./config/validatedConfig";
 
 const imapConfigSchema = z.object({
@@ -58,7 +57,7 @@ export function fetchUnseenEmails(): Promise<ParsedMail[]> {
             reject(searchErr);
             return;
           }
-          const fetchedEmails: any[] = [];
+          const fetchedEmails: ParsedMail[] = [];
           const fetch = imap.fetch(results, fetchOptions);
 
           fetch.on("message", (msg: Imap.ImapMessage, seqno: number) => {
@@ -69,9 +68,7 @@ export function fetchUnseenEmails(): Promise<ParsedMail[]> {
                   return;
                 }
 
-                console.log("Fetched email subject:", mail.subject);
-
-                fetchedEmails.push(processEmailContent(mail));
+                fetchedEmails.push(mail);
               });
             });
           });

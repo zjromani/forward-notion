@@ -1,12 +1,8 @@
 import { config } from "../config/validatedConfig";
 
 import notion from "./client";
-import { processEmailContent } from "./transformData";
-import { ParsedMail } from "mailparser";
 
-export async function sendToNotion(email: ParsedMail) {
-  const emailContent = processEmailContent(email);
-
+export async function sendToNotion(email: any) {
   const response = await notion.pages.create({
     parent: { database_id: config.notionDatabaseId },
     properties: {
@@ -14,7 +10,7 @@ export async function sendToNotion(email: ParsedMail) {
         title: [
           {
             text: {
-              content: emailContent.subject ?? "Default Subject"
+              content: email.subject ?? "Default Subject"
             }
           }
         ]
@@ -29,7 +25,7 @@ export async function sendToNotion(email: ParsedMail) {
             {
               type: "text",
               text: {
-                content: emailContent.body
+                content: email.body
               }
             }
           ]

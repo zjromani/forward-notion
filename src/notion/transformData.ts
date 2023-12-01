@@ -1,21 +1,27 @@
 import { ParsedMail } from "mailparser";
-import { NodeHtmlMarkdown } from "node-html-markdown";
 
 export function processEmailContent(email: ParsedMail) {
-  const processedContent = {
+  console.log("Parsed email object:", email);
+
+  return {
     subject: email.subject,
-    body: processBody(email.textAsHtml),
+    body: processBody(email.html ? email.textAsHtml : email.text),
     attachments: email.attachments
   };
-
-  return processedContent;
 }
 
 function processBody(body: string | undefined): string {
   if (typeof body === "string") {
-    return NodeHtmlMarkdown.translate(body);
+    const trimmedString = trimStringToMaxLength(body, 1000);
+    return trimmedString;
   } else {
-    console.log(body, "((((((((((body");
-    return "Body is not a parsable string";
+    return "No valid email body content available.";
   }
+}
+
+function trimStringToMaxLength(text: string, maxLength: number) {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.substring(0, maxLength);
 }
