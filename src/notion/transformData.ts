@@ -1,10 +1,10 @@
 import { ParsedMail } from "mailparser";
+import { NodeHtmlMarkdown } from "node-html-markdown";
 
 export function processEmailContent(email: ParsedMail) {
-  console.log("email", email);
   const processedContent = {
     subject: email.subject,
-    body: processBody(email.text),
+    body: processBody(email.textAsHtml),
     attachments: email.attachments
   };
 
@@ -13,8 +13,9 @@ export function processEmailContent(email: ParsedMail) {
 
 function processBody(body: string | undefined): string {
   if (typeof body === "string") {
-    return body;
+    return NodeHtmlMarkdown.translate(body);
   } else {
+    console.log(body, "((((((((((body");
     return "Body is not a parsable string";
   }
 }

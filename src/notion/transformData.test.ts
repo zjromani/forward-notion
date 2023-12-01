@@ -1,4 +1,4 @@
-import { processEmailContent } from "./contentProcessing"; // Adjust path as needed
+import { processEmailContent } from "./transformData"; // Adjust path as needed
 import { ParsedMail } from "mailparser";
 
 describe("processEmailContent", () => {

@@ -1,7 +1,7 @@
 import { config } from "../config/validatedConfig";
 
-import notion from "./notionClient";
-import { processEmailContent } from "../email/contentProcessing";
+import notion from "./client";
+import { processEmailContent } from "./transformData";
 import { ParsedMail } from "mailparser";
 
 export async function sendToNotion(email: ParsedMail) {

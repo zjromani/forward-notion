@@ -1,5 +1,5 @@
 import { ParsedMail } from "mailparser";
-import { fetchUnseenEmails } from "./email/emailReception";
+import { fetchUnseenEmails } from "./emailReception";
 import { sendToNotion } from "./notion/sendToNotion";
 
 fetchUnseenEmails()
