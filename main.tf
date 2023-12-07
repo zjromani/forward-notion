@@ -40,7 +40,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
 
 resource "aws_lambda_function" "forward_notion" {
   function_name = "forwardNotion"
-  runtime       = "nodejs14.x"
+  runtime       = "nodejs20.x"
   handler       = "dist/index.js"
 
   s3_bucket = var.s3_bucket
