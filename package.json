@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "prettier --check .",
     "fix": "prettier --write .",
-    "build": "tsc"
+    "build": "tsc",
+    "zip": "cd dist && zip -r ../app.zip . && cd .. && zip -ur app.zip node_modules",
+    "upload": "aws s3 cp app.zip s3://forward-notion --profile personal"
   },
   "keywords": [],
   "author": "Zach Romani",
