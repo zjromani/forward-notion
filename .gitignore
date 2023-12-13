@@ -3,4 +3,7 @@ dist/
 .env
 .DS_Store
 app.zip
+
 .terraform/
+terraform.tfstate
+terraform.tfstate.backup
