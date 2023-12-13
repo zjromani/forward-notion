@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.13",
+    "@types/aws-lambda": "^8.10.130",
     "dotenv": "^16.3.1",
     "html-to-markdown": "^1.0.0",
     "imap": "^0.8.17",
