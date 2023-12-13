@@ -41,10 +41,11 @@ resource "aws_iam_role_policy" "lambda_policy" {
 resource "aws_lambda_function" "forward_notion" {
   function_name = "forwardNotion"
   runtime       = "nodejs20.x"
-  handler       = "dist/index.js"
+  handler       = "src/index.handler"
 
   s3_bucket = var.s3_bucket
   s3_key    = var.s3_key
+  timeout = 30
 
   role = aws_iam_role.lambda_role.arn
 }
