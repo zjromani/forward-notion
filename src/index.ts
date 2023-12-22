@@ -3,6 +3,7 @@ import { fetchUnseenEmails } from "./services/imap/email-reception";
 import { sendToNotion } from "./services/notion/send-to-notion";
 import { processEmailContent } from "./services/notion/transform-data";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const handler: Handler = async (): Promise<any> => {
   fetchUnseenEmails()
     .then(emails => {

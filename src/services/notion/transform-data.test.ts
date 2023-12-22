@@ -2,6 +2,7 @@ import { processEmailContent } from "./transform-data"; // Adjust path as needed
 import { ParsedMail } from "mailparser";
 
 describe("processEmailContent", () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mockHeaders = new Map<string, any>([
     ["from", "test@email.com"],
     ["to", "test@emaal2.com"],

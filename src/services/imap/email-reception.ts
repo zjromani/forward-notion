@@ -36,7 +36,7 @@ function openInbox(cb: (err: Error, mailbox: Imap.Box) => void): void {
 export function fetchUnseenEmails(): Promise<ParsedMail[]> {
   return new Promise((resolve, reject) => {
     imap.once("ready", () => {
-      openInbox((err: Error, mailbox: Imap.Box) => {
+      openInbox((err: Error) => {
         if (err) {
           reject(err);
           return;
@@ -60,7 +60,7 @@ export function fetchUnseenEmails(): Promise<ParsedMail[]> {
           const fetchedEmails: ParsedMail[] = [];
           const fetch = imap.fetch(results, fetchOptions);
 
-          fetch.on("message", (msg: Imap.ImapMessage, seqno: number) => {
+          fetch.on("message", (msg: Imap.ImapMessage) => {
             msg.on("body", (stream: Source) => {
               simpleParser(stream, (parseErr: Error, mail: ParsedMail) => {
                 if (parseErr) {
