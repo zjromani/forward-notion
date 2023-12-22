@@ -1,7 +1,7 @@
 import { Handler } from "aws-lambda";
-import { fetchUnseenEmails } from "./emailReception";
-import { sendToNotion } from "./services/notion/sendToNotion";
-import { processEmailContent } from "./services/notion/transformData";
+import { fetchUnseenEmails } from "./services/imap/email-reception";
+import { sendToNotion } from "./services/notion/send-to-notion";
+import { processEmailContent } from "./services/notion/transform-data";
 
 export const handler: Handler = async (): Promise<any> => {
   fetchUnseenEmails()
