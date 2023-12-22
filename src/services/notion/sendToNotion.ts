@@ -1,4 +1,4 @@
-import { config } from "../config/validatedConfig";
+import { config } from "../../config/validatedConfig";
 
 import notion from "./client";
 
