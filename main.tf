@@ -1,11 +1,10 @@
 provider "aws" {
-  region = "us-east-1"
-	profile = "personal"
+  region  = "us-east-1"
+  profile = "personal"
 }
 
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_role"
-
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -22,7 +21,6 @@ resource "aws_iam_role" "lambda_role" {
 
 resource "aws_iam_role_policy" "lambda_policy" {
   role = aws_iam_role.lambda_role.id
-
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -45,19 +43,28 @@ resource "aws_lambda_function" "forward_notion" {
 
   s3_bucket = var.s3_bucket
   s3_key    = var.s3_key
-  timeout = 30
+  timeout   = 30
 
   role = aws_iam_role.lambda_role.arn
+
+  environment {
+    variables = {
+      GMAIL_PASSWORD     = var.GMAIL_PASSWORD
+      GMAIL_USER         = var.GMAIL_USER
+      NOTION_DATABASE_ID = var.NOTION_DATABASE_ID
+      NOTION_API_KEY     = var.NOTION_API_KEY
+    }
+  }
 }
 
 resource "aws_cloudwatch_event_rule" "schedule_rule" {
-  name        = "every_five_hours"
-  description = "Trigger every five hours"
+  name                = "every_five_hours"
+  description         = "Trigger every five hours"
   schedule_expression = "cron(0 */5 * * ? *)"
 }
 
 resource "aws_cloudwatch_event_target" "lambda_target" {
-  rule = aws_cloudwatch_event_rule.schedule_rule.name
+  rule      = aws_cloudwatch_event_rule.schedule_rule.name
   target_id = "lambdaTarget"
   arn       = aws_lambda_function.forward_notion.arn
 }

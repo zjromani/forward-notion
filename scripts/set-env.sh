@@ -1,18 +1,36 @@
 #!/bin/bash
-# Load environment variables from a .env file and export them for Terraform
+# Script to convert .env file to variables.tfvars for Terraform
 
-# Navigate to the project root directory where the .env file is located
-cd "$(dirname "$0")/.."
+ENV_FILE=".env"
+TFVARS_FILE="variables.tfvars"
 
-# Check if .env file exists
-if [ ! -f .env ]; then
-  echo "Error: .env file not found. Create an .env file in the project root directory with the required environment variables."
+if [ ! -f "$ENV_FILE" ]; then
+  echo "Error: .env file not found at path $ENV_FILE"
   exit 1
 fi
 
-# Load and export the environment variables
-set -a # automatically export all variables
-source .env
-set +a
+# Empty the tfvars file if it exists or create a new one
+> "$TFVARS_FILE"
 
-# The script ends here. The calling npm script will handle the rest.
+# Read each line in the .env file
+while IFS= read -r line || [[ -n "$line" ]]; do
+  # Skip empty lines and lines which start with #
+  if [ -z "$line" ] || [[ $line == \#* ]]; then
+    continue
+  fi
+
+  # Split the line into key and value
+  IFS='=' read -ra KV <<< "$line"
+  key="${KV[0]}"
+  value="${KV[1]}"
+
+  # Handle special characters in value
+  # Escape double quotes in the value
+  value="${value//\"/\\\"}"
+
+  # Write the variable to the tfvars file
+  # Ensure value is enclosed in double quotes
+  echo "${key} = \"${value}\"" >> "$TFVARS_FILE"
+done < "$ENV_FILE"
+
+echo "variables.tfvars file has been created."
