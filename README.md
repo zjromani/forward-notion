@@ -46,29 +46,43 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Deployment
 
-**Status:** Under Construction 🚧
+The deployment process involves building the application, creating a deployment package, uploading it to AWS S3, and then using Terraform to deploy the Lambda function.
 
-### Terraform
+1. **Build and Deploy:**
 
-Before deploying with Terraform, set the required environment variables by running:
+   - The `deploy` script in `package.json` has been configured to automate the build, package, upload, and deployment process. To deploy your Lambda function, simply run:
 
-This will load the variables from your `.env` file and set them for the current shell session, making them available for Terraform commands.
+     ```bash
+     npm run deploy
+     ```
 
-```bash
-./scripts/set-env.sh
-```
+   This command performs the following actions:
 
-To deploy the infrastructure, run:
+   - Compiles the TypeScript files into JavaScript (using the TypeScript Compiler).
+   - Creates a zipped deployment package with a unique timestamp.
+   - Uploads the deployment package to the specified AWS S3 bucket.
+   - Applies the Terraform configuration to update the AWS Lambda function with the new deployment package.
 
-1. `npm run build``
-1. `npm run zip`
-1. `npm run upload`
-1. `npm run deploy`
+1. **Deployment Script Details:**
 
-```bash
+   The `deploy.sh` script included in the project root does the following:
 
+   - Sets a version stamp based on the current date and time.
+   - Builds the application and zips the output with the version stamp.
+   - Cleans up old zip files in the project directory.
+   - Uploads the new zip file to S3.
+   - Runs Terraform apply with the new zip file as a variable.
+
+### Notes
+
+- Ensure that your AWS and Terraform configurations are up to date and correct.
+- The script assumes that your AWS credentials and Terraform settings are already configured.
+- The deployment process is configured for a specific AWS profile and S3 bucket. Update these settings in the scripts if necessary.
 
 ### Usage
 
 **Status:** Under Construction 🚧
+
+```
+
 ```
