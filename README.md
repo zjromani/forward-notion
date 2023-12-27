@@ -6,13 +6,6 @@
 
 This project is an email-to-Notion integration service designed to forward emails to a Notion database. It fetches emails, processes their content, and then programmatically adds them as entries to a specified Notion database. This service is particularly useful for organizing emails, archiving important messages, or integrating email content into a Notion-based workflow.
 
-## Features
-
-- **Email Fetching**: Retrieve emails using IMAP protocol.
-- **Content Processing**: Parse and convert email content (HTML/plain text) into Markdown or a suitable format for Notion.
-- **Notion Integration**: Automate the addition of email contents to a Notion database.
-- **Attachments Handling**: Manage email attachments appropriately within the Notion database.
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
