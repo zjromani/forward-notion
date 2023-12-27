@@ -60,9 +60,10 @@ This will load the variables from your `.env` file and set them for the current 
 
 To deploy the infrastructure, run:
 
-1. `npm run prepare-deploy` # this will initialize terraform with .env files and build the project
-1. `terraform plan`
-1. `terraform apply`
+1. `npm run build``
+1. `npm run zip`
+1. `npm run upload`
+1. `npm run deploy`
 
 ```bash
 

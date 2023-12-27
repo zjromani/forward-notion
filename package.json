@@ -9,7 +9,7 @@
     "build": "tsc",
     "zip": "npm run build && cd dist && zip -r ../app.zip . && cd .. && zip -ur app.zip node_modules",
     "upload": "npm run zip && echo 'Starting upload to S3...' && aws s3 cp app.zip s3://forward-notion --profile personal && echo 'Upload successful' || echo 'Upload failed'",
-    "prepare-deploy": "scripts/set-env.sh && terraform init && terraform apply -var-file=variables.tfvars"
+    "deploy": "scripts/set-env.sh && terraform init && terraform apply -var-file=variables.tfvars"
   },
   "keywords": [],
   "author": "Zach Romani",
