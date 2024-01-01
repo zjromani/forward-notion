@@ -11,3 +11,5 @@ terraform.tfstate.backup
 output.json
 variables.tfvars
 version.txt
+
+app-*.zip
