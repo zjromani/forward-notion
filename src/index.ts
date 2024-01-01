@@ -1,27 +1,28 @@
 import { Handler } from "aws-lambda";
-import { fetchUnseenEmails } from "./services/imap/email-reception";
+import { fetchUnseenEmails } from "./services/email/fetch-emails";
 import { sendToNotion } from "./services/notion/send-to-notion";
 import { processEmailContent } from "./services/notion/transform-data";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const handler: Handler = async (): Promise<any> => {
-  fetchUnseenEmails()
-    .then(emails => {
-      return Promise.all(emails.map(email => processEmailContent(email)));
-    })
-    .then(parsedEmails => {
-      const email = parsedEmails[0];
-      // return Promise.all(
-      //   parsedEmails.map(parsedEmail => sendToNotion(parsedEmail))
-      // );
-
-      // console.log(email);
-      return sendToNotion(email);
-    })
-    .then(results => {
-      console.log("All emails have been sent to Notion:", results);
-    })
-    .catch(error => {
-      console.error("An error occurred:", error);
-    });
+  console.log("Handler started");
+  return await processEmails();
 };
+async function processEmails() {
+  try {
+    const emails = await fetchUnseenEmails();
+    console.log(`Fetched emails: ${emails.length}`);
+
+    const parsedEmails = await Promise.all(
+      emails.map(email => processEmailContent(email))
+    );
+    console.log(`Parsed emails: ${parsedEmails.length}`);
+
+    const results = await sendToNotion(parsedEmails[0]);
+    console.log("Email sent to Notion:", results);
+
+    return results;
+  } catch (error) {
+    console.error("An error occurred:", error);
+    throw error;
+  }
+}
