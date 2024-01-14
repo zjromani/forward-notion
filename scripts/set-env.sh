@@ -20,16 +20,17 @@ while IFS= read -r line || [[ -n "$line" ]]; do
   fi
 
   # Split the line into key and value
-  IFS='=' read -ra KV <<< "$line"
-  key="${KV[0]}"
-  value="${KV[1]}"
+  IFS='=' read -r key value <<< "$line"
 
-  # Handle special characters in value
-  # Escape double quotes in the value
+  # Remove leading and trailing quotes from value
+  value="${value%\"}"
+  value="${value#\"}"
+
+  # Escape only the internal double quotes in the value
   value="${value//\"/\\\"}"
 
   # Write the variable to the tfvars file
-  # Ensure value is enclosed in double quotes
+  # Enclose the value in double quotes
   echo "${key} = \"${value}\"" >> "$TFVARS_FILE"
 done < "$ENV_FILE"
 
