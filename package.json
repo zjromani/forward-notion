@@ -7,8 +7,6 @@
     "lint": "prettier --check .",
     "fix": "prettier --write .",
     "build": "tsc",
-    "zip": "npm run build && cd dist && zip -r ../app-$(date +%Y%m%d%H%M%S).zip . && cd .. && zip -ur app-$(date +%Y%m%d%H%M%S).zip node_modules",
-    "upload": "npm run zip && echo 'Starting upload to S3...' && aws s3 cp app-*.zip s3://forward-notion --profile personal && echo 'Upload successful' || echo 'Upload failed'",
     "deploy": "./deploy.sh"
   },
   "keywords": [],
